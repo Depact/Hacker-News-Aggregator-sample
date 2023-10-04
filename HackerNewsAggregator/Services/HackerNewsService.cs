@@ -44,7 +44,7 @@ public class HackerNewsService : IHackerNewsService
     {
         var cachedBestStories = await _hackerNewsRepository.GetBestStoriesItemsAsync();
         if (cachedBestStories != null) return cachedBestStories;
-        
+
         var bestStoriesIds = await GetBestStoriesIdsAsync();
 
         var bestStories = new List<StoryDto?>();
