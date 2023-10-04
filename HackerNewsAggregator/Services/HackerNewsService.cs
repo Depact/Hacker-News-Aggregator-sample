@@ -54,8 +54,12 @@ public class HackerNewsService : IHackerNewsService
             var story = await GetStoryAsync(storyId);
             bestStories.Add(story);
         }
-        
-        await _hackerNewsRepository.UpdateBestStoriesItemsAsync(bestStories);
+
+        var sortedBestStories = bestStories
+            .Where(story => story != null)
+            .OrderByDescending(story => story.Score).ToList();
+
+        await _hackerNewsRepository.UpdateBestStoriesItemsAsync(sortedBestStories);
 
         return bestStories;
     }
