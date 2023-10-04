@@ -1,0 +1,37 @@
+﻿version: '1'
+
+name: 'hacker-news-aggregator'
+
+services:
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - hackernewsaggregator-data:/data
+    
+  hackernewsaggregator:
+    container_name: 'hacker-news-aggregator'
+    image: hackernewsaggregator
+    build:
+      context: .
+      dockerfile: HackerNewsAggregator/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=C:\https\aspnetapp.pfx
+    volumes:
+      - ${USERPROFILE}\.aspnet\https:C:\https:ro
+    #    volumes:
+    #      - ~/.aspnet/https:/root/.aspnet/https:ro
+    #      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
+    ports:
+      - "5001:443"
+      - "5000:80"
+    depends_on:
+      - redis
+
+volumes:
+  hackernewsaggregator-data:
+    external: false
