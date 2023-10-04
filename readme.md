@@ -24,3 +24,20 @@ There is two ways to run this repository depending on where it hosted and does d
 3. Update repository network settings in order to let containers connect. Settings of this repository tweaked for running HackerNewsAggregator project through IDE.
 4. Change docker-compose settings to make sure they compatible with your local certificates
 5. Run docker compose
+
+## Notes
+#### RestEase
+I used in this project RestEase first time in order to see it in action first time and get the idea how good it is compare to classic polly approach. 
+
+As far as I see now - it contain basic retry policy compatibility with polly. But with this use case rate limit policy way more important and this package seem to be lacking. 
+RestEase is overall nice to work with, but not great to debug in case something goes wrong. 
+
+Given time I'd spend more time looking into search for something similar to RestEase but with functionality RestEase lacking or a way to enable RestEase to provide various features that make polly so valuable. 
+
+This project require loading 501 request in worse case scenario where there is no cached data. Requests loaded not in parallel at least, but this can be changed. This area is lacking in optimizations in order to ensure highest performance with minimum chances to overload Hacker News Api.
+
+#### Eventual consistency
+Because this project does not subscribed to event bus of hacker news cached records can easily become outdated. In order to mitigate this caches expiry time is used. But such approach have a lot of problematic moments requiring fine tuning.
+
+#### Project may benefit from use of other cache, like Memcached
+But it require more testing and real use data.
