@@ -62,7 +62,7 @@ public class HackerNewsRepository : IHackerNewsRepository
         var created = await _database.StringSetAsync(
             storyId.ToString(),
             JsonSerializer.Serialize(story, SerializerOptions),
-            // there is no conditions to reach eventual consistency, so expiry time instead
+            // There is no conditions to reach eventual consistency, so expiry time instead
             TimeSpan.FromDays(30)
         );
 
@@ -95,7 +95,7 @@ public class HackerNewsRepository : IHackerNewsRepository
         var created = await _database.StringSetAsync(
             _bestStoriesIdsKey,
             JsonSerializer.Serialize(bestStoriesIds, SerializerOptions),
-            // there is no conditions to reach eventual consistency, so expiry time instead
+            // There is no conditions to reach eventual consistency, so expiry time instead
             TimeSpan.FromHours(1)
         );
 
@@ -128,7 +128,7 @@ public class HackerNewsRepository : IHackerNewsRepository
         var created = await _database.StringSetAsync(
             _bestStoriesItemsKey,
             JsonSerializer.Serialize(bestStoriesIds, SerializerOptions),
-            // there is no conditions to reach eventual consistency, so expiry time instead
+            // There is no conditions to reach eventual consistency, so expiry time instead
             TimeSpan.FromHours(12)
         );
 

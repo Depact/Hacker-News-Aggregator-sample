@@ -48,10 +48,10 @@ public class HackerNewsService : IHackerNewsService
         var bestStoriesIds = await GetBestStoriesIdsAsync();
 
         var bestStories = new List<StoryDto?>();
+        // Generally better to have something like polly rate limiter in cases like this to not hit external API too hard
         foreach (var storyId in bestStoriesIds)
         {
             var story = await GetStoryAsync(storyId);
-
             bestStories.Add(story);
         }
         

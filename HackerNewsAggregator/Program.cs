@@ -5,6 +5,9 @@ using HackerNewsAggregator.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<IHackerNewsService, HackerNewsService>();
+
+builder.Services.AddTransient<IHackerNewsRepository, HackerNewsRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -12,10 +15,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddRedis(builder.Configuration);
-
-builder.Services.AddScoped<IHackerNewsService, HackerNewsService>();
-
-builder.Services.AddTransient<IHackerNewsRepository, HackerNewsRepository>();
 
 var app = builder.Build();
 
